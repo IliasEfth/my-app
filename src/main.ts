@@ -8,9 +8,6 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { createCustomElement } from "@angular/elements";
 import { WbSmartButtonComponent } from "./app/wb-smart-button/wb-smart-button.component";
-import "angular";
-
-setAngularJSGlobal(angular)
 
 if (environment.production) {
   enableProdMode();
@@ -18,7 +15,10 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(platformRef => {
   const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
-  upgrade.bootstrap(document.body, ['angularjsDemo']);
+
+  const element = document.querySelector('#myAngularJSBootstrap');
+
+  upgrade.bootstrap(element!, ['angularjsDemo']);
 
   const customElement = createCustomElement(WbSmartButtonComponent, {injector: platformRef.injector});
   customElements.define('wb-smart-button', customElement);
