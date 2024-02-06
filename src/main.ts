@@ -1,11 +1,16 @@
-import * as angular from "angular";
-import { enableProdMode } from '@angular/core';
+//import "angular"
+import "./polyfills";
+import { PlatformRef, enableProdMode } from '@angular/core';
+import { createApplication } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UpgradeModule, setAngularJSGlobal } from "@angular/upgrade/static";
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { createCustomElement } from "@angular/elements";
+import { WbSmartButtonComponent } from "./app/wb-smart-button/wb-smart-button.component";
+import "angular";
 
-setAngularJSGlobal(angular);
+setAngularJSGlobal(angular)
 
 if (environment.production) {
   enableProdMode();
@@ -13,6 +18,27 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(platformRef => {
   const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
-  upgrade.bootstrap(document.documentElement, ['angularjs_demo']);
+  upgrade.bootstrap(document.body, ['angularjsDemo']);
+
+  const customElement = createCustomElement(WbSmartButtonComponent, {injector: platformRef.injector});
+  customElements.define('wb-smart-button', customElement);
 })
   .catch(err => console.error(err));
+
+// (async () => {
+//   //setAngularJSGlobal(angular);
+//   const app = await createApplication({
+//     providers: []
+//   })//.then(platformRef => {
+//   //   const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
+//   //   upgrade.bootstrap(document.body, ['angularjsDemo']);
+
+//   //   const customElement = createCustomElement(WbSmartButtonComponent, { injector: platformRef.injector });
+//   //   customElements.define('wb-smart-button', customElement);
+//   // });
+
+//   // const upgrade = app.injector.get(UpgradeModule) as UpgradeModule;
+//   // upgrade.bootstrap(document.body, ['angularjsDemo'])
+//   const customElement = createCustomElement(WbSmartButtonComponent, { injector: app.injector });
+//   customElements.define('wb-smart-button', customElement);
+// })()

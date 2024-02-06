@@ -9,7 +9,7 @@ function smartButtonController($window) {
 }
 
 
-angular.module('angularjs_demo').component('smartButton', {
+angular.module('angularjsDemo').component('smartButton', {
     templateUrl: '/smartButton.html',
     controller: smartButtonController,
     controllerAs: 'ctrl'

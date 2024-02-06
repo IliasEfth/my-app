@@ -2,4 +2,4 @@
 
 'use strict';
 
-angular.module('angularjs_demo',[]);
+angular.module('angularjsDemo',[]);

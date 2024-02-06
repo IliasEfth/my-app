@@ -1,1 +1,1 @@
-angular.module('angularjs_demo').run(['$templateCache', function($templateCache) {$templateCache.put('/smartButton.html','<button ng-click="ctrl.sayHello()">{{ctrl.title}}</button>\r\n');}]);
+angular.module('angularjsDemo').run(['$templateCache', function($templateCache) {$templateCache.put('/smartButton.html','<button ng-click="ctrl.sayHello()">{{ctrl.title}}</button>\r\n');}]);
