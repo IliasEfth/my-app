@@ -24,21 +24,3 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(platformRef => {
   customElements.define('wb-smart-button', customElement);
 })
   .catch(err => console.error(err));
-
-// (async () => {
-//   //setAngularJSGlobal(angular);
-//   const app = await createApplication({
-//     providers: []
-//   })//.then(platformRef => {
-//   //   const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
-//   //   upgrade.bootstrap(document.body, ['angularjsDemo']);
-
-//   //   const customElement = createCustomElement(WbSmartButtonComponent, { injector: platformRef.injector });
-//   //   customElements.define('wb-smart-button', customElement);
-//   // });
-
-//   // const upgrade = app.injector.get(UpgradeModule) as UpgradeModule;
-//   // upgrade.bootstrap(document.body, ['angularjsDemo'])
-//   const customElement = createCustomElement(WbSmartButtonComponent, { injector: app.injector });
-//   customElements.define('wb-smart-button', customElement);
-// })()
