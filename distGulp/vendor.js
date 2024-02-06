@@ -2964,7 +2964,7 @@ Zone.__load_patch('PromiseRejectionEvent', (global, Zone) => {
  * (c) 2010-2018 Google, Inc. http://angularjs.org
  * License: MIT
  */
-(function(window) {'use strict';
+(function(window, customGlobalScope) {'use strict';
 
 /* exported
   minErrConfig,
@@ -3245,6 +3245,14 @@ var lowercase = function(string) {return isString(string) ? string.toLowerCase()
  */
 var uppercase = function(string) {return isString(string) ? string.toUpperCase() : string;};
 
+function getGlobalScope(){
+  if(customGlobalScope)
+  return customGlobalScope;
+
+  return window;
+}
+
+var _global = getGlobalScope();
 
 var
     msie,             // holds major version number for IE, or NaN if UA is not IE.
@@ -3258,9 +3266,10 @@ var
     ngMinErr          = minErr('ng'),
 
     /** @name angular */
-    angular           = window.angular || (window.angular = {}),
     angularModule,
     uid               = 0;
+
+var angular = _global.angular || (_global.angular = {});
 
 // Support: IE 9-11 only
 /**
@@ -5814,7 +5823,7 @@ function publishExternalAPI(angular) {
     '$$uppercase': uppercase
   });
 
-  angularModule = setupModuleLoader(window);
+  angularModule = setupModuleLoader(_global);
 
   angularModule('ng', ['ngLocale'], ['$provide',
     function ngModule($provide) {
@@ -39226,7 +39235,7 @@ function parseLength(val) {
   return isNumberNaN(intVal) ? -1 : intVal;
 }
 
-if (window.angular.bootstrap) {
+if (_global.angular.bootstrap) {
   // AngularJS is already loaded, so we can return here...
   if (window.console) {
     console.log('WARNING: Tried to load AngularJS more than once.');
@@ -39387,16 +39396,15 @@ $provide.value("$locale", {
     angularInit(window.document, bootstrap);
   });
 
-})(window);
+})(window,customGlobalScope);
 
-!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
+!(typeof customGlobalScope === 'undefined'? window : customGlobalScope)['angular'].$$csp().noInlineStyle && (typeof customGlobalScope === 'undefined'? window : customGlobalScope)['angular'].element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 ;
 // this is the start app 
 
 'use strict';
 
-angular.module('angularjsDemo',[]);
-;
+(typeof customGlobalScope === 'undefined'? window : customGlobalScope)['angular'].module('angularjsDemo',[]);
 smartButtonController.$inject = ['$window'];
 
 function smartButtonController($window) {
@@ -39408,13 +39416,13 @@ function smartButtonController($window) {
 }
 
 
-angular.module('angularjsDemo').component('smartButton', {
+(typeof customGlobalScope === 'undefined'? window : customGlobalScope)['angular'].module('angularjsDemo').component('smartButton', {
     templateUrl: '/smartButton.html',
     controller: smartButtonController,
     controllerAs: 'ctrl'
 })
 ;
-angular.module('angularjsDemo').run(['$templateCache', function($templateCache) {$templateCache.put('/smartButton.html','<button ng-click="ctrl.sayHello()">{{ctrl.title}}</button>\r\n');}]);
+(typeof customGlobalScope === 'undefined'? window : customGlobalScope)['angular'].module('angularjsDemo').run(['$templateCache', function($templateCache) {$templateCache.put('/smartButton.html','<button ng-click="ctrl.sayHello()">{{ctrl.title}}</button>\r\n');}]);
 ;
 "use strict";
 (self["webpackChunkmy_app"] = self["webpackChunkmy_app"] || []).push([[179],{
@@ -90391,8 +90399,8 @@ let angular = {
   getTestability: noNg
 };
 try {
-  if ( /*#__PURE__*/window.hasOwnProperty('angular')) {
-    angular = window.angular;
+  if ( /*#__PURE__*/(typeof customGlobalScope === 'undefined'? window : customGlobalScope).hasOwnProperty('angular')) {
+    angular = (typeof customGlobalScope === 'undefined'? window : customGlobalScope).angular;
   }
 } catch {
   // ignore in CJS mode.
@@ -92124,7 +92132,7 @@ let UpgradeModule = /*#__PURE__*/(() => {
       }]);
       const upgradeModule = module_(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
       // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
-      const windowAngular = window['angular'];
+      const windowAngular = (typeof customGlobalScope === 'undefined'? window : customGlobalScope)['angular'];
       windowAngular.resumeBootstrap = undefined;
       // Bootstrap the AngularJS application inside our zone
       const returnValue = this.ngZone.run(() => bootstrap(element$1, [upgradeModule.name], config));
